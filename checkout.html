@@ -7,42 +7,46 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-50 text-gray-900 p-4">
-    <div class="max-w-md mx-auto space-y-6">
-        <header class="flex items-center space-x-2 py-4">
-            <a href="index.html" class="text-gray-400">← Back</a>
-            <h1 class="text-xl font-black uppercase">Checkout</h1>
+    <div class="max-w-md mx-auto space-y-6 pb-20">
+        <header class="flex items-center space-x-3 py-4">
+            <a href="index.html" class="bg-white p-2 rounded-xl shadow-sm border text-gray-400">←</a>
+            <h1 class="text-xl font-black uppercase tracking-tighter text-gray-800">Checkout</h1>
         </header>
 
-        <div class="bg-white p-6 rounded-3xl border shadow-sm space-y-4">
-            <h3 class="font-black text-xs uppercase text-gray-400">Delivery Details</h3>
-            <input type="text" id="cust-name" placeholder="Full Name" class="w-full p-4 rounded-2xl border bg-gray-50 text-sm outline-none focus:ring-2 focus:ring-blue-500">
-            <input type="text" id="cust-address" placeholder="House No, Road, City, PIN" class="w-full p-4 rounded-2xl border bg-gray-50 text-sm outline-none focus:ring-2 focus:ring-blue-500">
-            <input type="tel" id="cust-phone" placeholder="WhatsApp Number" class="w-full p-4 rounded-2xl border bg-gray-50 text-sm outline-none focus:ring-2 focus:ring-blue-500">
+        <div class="bg-white p-6 rounded-[2rem] border shadow-sm space-y-4">
+            <h3 class="font-black text-[10px] uppercase text-gray-400 tracking-widest">Delivery Address</h3>
+            <input type="text" id="cust-name" placeholder="Full Name" class="w-full p-4 rounded-xl border bg-gray-50 text-sm outline-none focus:ring-2 focus:ring-blue-500 font-medium">
+            <input type="text" id="cust-address" placeholder="House No, Area, City, PIN (Odisha)" class="w-full p-4 rounded-xl border bg-gray-50 text-sm outline-none focus:ring-2 focus:ring-blue-500 font-medium">
+            <input type="tel" id="cust-phone" placeholder="WhatsApp Number" class="w-full p-4 rounded-xl border bg-gray-50 text-sm outline-none focus:ring-2 focus:ring-blue-500 font-medium">
         </div>
 
-        <div class="bg-white p-6 rounded-3xl border shadow-sm space-y-3">
-            <h3 class="font-black text-xs uppercase text-gray-400 tracking-widest">Order Summary</h3>
+        <div class="bg-white p-6 rounded-[2rem] border shadow-sm space-y-3">
+            <h3 class="font-black text-[10px] uppercase text-gray-400 tracking-widest">Payment Summary</h3>
             <div class="flex justify-between text-sm text-gray-500">
-                <span>MRP Total</span>
+                <span class="font-medium">MRP Total</span>
                 <span class="line-through">₹1,299</span>
             </div>
             <div class="flex justify-between text-sm text-green-600 font-bold">
                 <span>Discount</span>
                 <span>- ₹700</span>
             </div>
-            <div class="flex justify-between text-sm border-b pb-3">
-                <span class="text-gray-500">Shipping</span>
-                <span class="text-blue-600 font-bold uppercase">FREE</span>
+            <div class="flex justify-between text-sm border-b pb-4">
+                <span class="text-gray-500 font-medium">Shipping</span>
+                <div class="flex space-x-2">
+                    <span class="text-gray-400 line-through font-bold text-xs">₹99</span>
+                    <span class="text-blue-600 font-black uppercase">FREE</span>
+                </div>
             </div>
             <div class="flex justify-between pt-2 items-center">
-                <span class="font-black text-lg">Total</span>
-                <span class="font-black text-3xl text-blue-600">₹599</span>
+                <span class="font-black text-lg text-gray-800 uppercase">Total amount</span>
+                <span class="font-black text-3xl text-blue-600 tracking-tighter">₹599</span>
             </div>
         </div>
 
         <button onclick="payNow()" class="w-full bg-blue-600 text-white py-5 rounded-2xl font-black text-lg shadow-xl active:scale-95 transition-all">
             PAY ONLINE (UPI)
         </button>
+        <p class="text-[10px] text-center text-gray-400 font-bold uppercase tracking-widest">Powered by Secure UPI Odisha</p>
     </div>
 
     <script>
@@ -50,15 +54,20 @@
             const name = document.getElementById('cust-name').value;
             const addr = document.getElementById('cust-address').value;
             const phone = document.getElementById('cust-phone').value;
-            const upiId = "theoffstore@nyes"; // REPLACE THIS
-            const myNumber = "917894684432"; // REPLACE THIS
+            
+            // Your Personal Details
+            const upiId = "theoffstore@nyes"; 
+            const myNumber = "917894684432"; 
 
             if(!name || !addr || !phone) {
-                alert("Please fill all details!");
+                alert("Please fill in your Delivery Details to proceed.");
                 return;
             }
 
-            const message = `🚀 *ORDER FROM THE OFF STORE*\n\nName: ${name}\nAddress: ${addr}\nPhone: ${phone}\n\n*Click to Pay:* upi://pay?pa=${upiId}&pn=TheOffStore&am=599&cu=INR`;
+            // Message for WhatsApp
+            const message = `🚀 *NEW ORDER - THE OFF STORE*\n\n*Product:* 10-in-1 Puncture Kit\n*Amount:* ₹599\n\n*Customer:* ${name}\n*Address:* ${addr}\n*Phone:* ${phone}\n\n✅ _Click below to Pay:_ \nupi://pay?pa=${upiId}&pn=TheOffStore&am=599&cu=INR`;
+            
+            // Open WhatsApp
             window.location.href = `https://wa.me/${myNumber}?text=${encodeURIComponent(message)}`;
         }
     </script>
