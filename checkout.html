@@ -8,109 +8,110 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f9fafb; }
-        input, textarea { border: 2px solid #f3f4f6 !important; transition: all 0.2s; }
-        input:focus, textarea:focus { border-color: #2563eb !important; background-color: white !important; outline: none; }
+        .input-box { border: 2px solid #f1f5f9; transition: all 0.3s ease; }
+        .input-box:focus { border-color: #2563eb; background: white; outline: none; }
+        .shimmer { background: linear-gradient(90deg, #2563eb 0%, #3b82f6 50%, #2563eb 100%); background-size: 200% auto; animation: shine 3s linear infinite; }
+        @keyframes shine { to { background-position: 200% center; } }
     </style>
 </head>
 <body class="pb-10">
 
     <header class="p-6 bg-white border-b sticky top-0 z-50 flex items-center justify-between">
         <button onclick="window.history.back()" class="text-xl font-black">←</button>
-        <h1 class="font-black text-sm tracking-widest uppercase text-gray-400">Secure Checkout</h1>
+        <div class="flex flex-col items-center">
+            <h1 class="font-black text-[10px] tracking-[0.3em] uppercase text-gray-400">Secure Checkout</h1>
+            <p class="text-[8px] font-bold text-green-600 flex items-center gap-1">🔒 SSL ENCRYPTED</p>
+        </div>
         <div class="w-6"></div>
     </header>
 
     <main class="p-6 max-w-md mx-auto space-y-6">
         
-        <div class="bg-blue-600 rounded-[2.5rem] p-6 text-white shadow-xl shadow-blue-100 relative overflow-hidden">
-            <div class="flex justify-between items-start mb-4 relative z-10">
-                <p id="orderIdDisp" class="text-[10px] font-black bg-white/20 px-2 py-1 rounded">OFF-XXXX</p>
-                <p class="text-[10px] font-black uppercase tracking-widest opacity-80">Order Summary</p>
+        <div class="shimmer rounded-[2.5rem] p-7 text-white shadow-2xl shadow-blue-200 relative overflow-hidden">
+            <div class="flex justify-between items-start mb-6 relative z-10">
+                <span id="orderIdDisp" class="text-[9px] font-black bg-black/20 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/20 uppercase tracking-widest">OFF-ORDERING...</span>
+                <p class="text-[9px] font-black uppercase tracking-widest opacity-60 italic">Pan-India Express</p>
             </div>
-            <h2 id="productNameDisp" class="text-xl font-black leading-tight relative z-10">Product Name</h2>
-            <div class="mt-4 flex justify-between items-end border-t border-white/20 pt-4 relative z-10">
-                <div>
-                    <p class="text-[10px] font-bold opacity-70 uppercase">Total Amount</p>
-                    <p id="totalPriceDisp" class="text-3xl font-black tracking-tighter">₹0</p>
-                </div>
-                <p id="qtyDisp" class="text-sm font-black bg-white text-blue-600 px-3 py-1 rounded-full italic">Qty: 1</p>
-            </div>
-            <div class="absolute -right-4 -bottom-4 opacity-10 text-8xl font-black italic">OFF</div>
-        </div>
-
-        <div class="bg-white rounded-[2.5rem] p-6 border shadow-sm space-y-4">
-            <h3 class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 mb-2">Shipping Details (Pan-India)</h3>
             
-            <div>
-                <label class="text-[10px] font-black uppercase ml-1 text-gray-500">Full Name</label>
-                <input type="text" id="custName" placeholder="Enter your full name" class="w-full mt-1 p-4 bg-gray-50 rounded-2xl font-bold text-sm">
+            <h2 id="productNameDisp" class="text-2xl font-black leading-tight tracking-tighter uppercase mb-6">Product Loading...</h2>
+            
+            <div class="flex justify-between items-end border-t border-white/20 pt-5 relative z-10">
+                <div>
+                    <p class="text-[9px] font-black opacity-60 uppercase mb-1">Total Payable</p>
+                    <p id="totalPriceDisp" class="text-4xl font-black tracking-tighter">₹0</p>
+                </div>
+                <div class="bg-white text-blue-600 px-4 py-2 rounded-2xl font-black text-xs italic shadow-lg">
+                    Qty: <span id="qtyDisp">1</span>
+                </div>
             </div>
+            <div class="absolute -right-6 -bottom-6 opacity-10 text-9xl font-black italic select-none">OFF</div>
+        </div>
 
-            <div>
-                <label class="text-[10px] font-black uppercase ml-1 text-gray-500">WhatsApp Number</label>
-                <input type="tel" id="custPhone" placeholder="10-digit mobile number" class="w-full mt-1 p-4 bg-gray-50 rounded-2xl font-bold text-sm">
-            </div>
+        <div class="bg-white rounded-[2.5rem] p-7 border border-gray-100 shadow-sm space-y-5">
+            <h3 class="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 border-b pb-3">Delivery Address</h3>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="text-[9px] font-black uppercase ml-1 text-gray-400">Full Name</label>
+                    <input type="text" id="custName" placeholder="Enter your name" class="input-box w-full mt-1 p-4 bg-gray-50 rounded-2xl font-bold text-sm">
+                </div>
 
-            <div>
-                <label class="text-[10px] font-black uppercase ml-1 text-gray-500">Full Delivery Address</label>
-                <textarea id="custAddress" rows="3" placeholder="House No, Area, Landmark, City, State, Pincode" class="w-full mt-1 p-4 bg-gray-50 rounded-2xl font-bold text-sm"></textarea>
+                <div>
+                    <label class="text-[9px] font-black uppercase ml-1 text-gray-400">WhatsApp Mobile</label>
+                    <input type="tel" id="custPhone" placeholder="10-digit number" class="input-box w-full mt-1 p-4 bg-gray-50 rounded-2xl font-bold text-sm">
+                </div>
+
+                <div>
+                    <label class="text-[9px] font-black uppercase ml-1 text-gray-400">Full Address & Pincode</label>
+                    <textarea id="custAddress" rows="3" placeholder="House No, Street, City, State, Pincode" class="input-box w-full mt-1 p-4 bg-gray-50 rounded-2xl font-bold text-sm"></textarea>
+                </div>
             </div>
         </div>
 
-        <div class="space-y-4">
-            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-2xl">
-                <p class="text-[9px] font-black text-yellow-800 uppercase tracking-widest mb-1">Payment Instructions</p>
-                <p class="text-[11px] font-bold text-yellow-700 leading-tight">After clicking Pay Now, please ensure you complete the payment and <span class="underline">mention your Order ID in the note</span>.</p>
+        <div class="space-y-4 pt-2">
+            <div class="bg-yellow-50 border-2 border-yellow-100 p-4 rounded-3xl flex gap-3 items-center">
+                <span class="text-2xl">⚠️</span>
+                <p class="text-[10px] font-bold text-yellow-800 leading-tight">
+                    <span class="font-black uppercase tracking-widest block mb-1 text-yellow-900">Important</span>
+                    Mention Order ID in your UPI Payment Note to confirm delivery.
+                </p>
             </div>
 
-            <button onclick="handlePayment()" id="payBtn" class="w-full bg-black text-white py-5 rounded-full font-black text-lg uppercase tracking-widest shadow-2xl active:scale-95 transition-all flex justify-center items-center gap-2">
+            <button onclick="handlePayment()" id="payBtn" class="w-full bg-black text-white py-6 rounded-full font-black text-lg uppercase tracking-[0.1em] shadow-xl active:scale-95 transition-all">
                 Pay Now via UPI
             </button>
             
-            <div class="flex justify-center items-center gap-4 opacity-30">
-                <p class="text-[8px] font-black uppercase tracking-widest text-gray-500">Secure Payment</p>
-                <div class="h-px w-8 bg-gray-300"></div>
-                <p class="text-[8px] font-black uppercase tracking-widest text-gray-500">Pan-India Support</p>
-            </div>
+            <p class="text-center text-[9px] font-black text-gray-400 uppercase tracking-widest">
+                Trusted by customers Pan-India 🇮🇳
+            </p>
         </div>
-
     </main>
 
     <script>
-        // Load data from localStorage (set by index.html)
+        // 1. LOAD DATA
         const order = JSON.parse(localStorage.getItem('pendingOrder'));
-        
-        if(!order) {
-            window.location.href = 'index.html';
-        }
+        if(!order) { window.location.href = 'index.html'; }
 
-        // Fill Display
         document.getElementById('orderIdDisp').innerText = order.id;
         document.getElementById('productNameDisp').innerText = order.name;
         document.getElementById('totalPriceDisp').innerText = `₹${order.total}`;
-        document.getElementById('qtyDisp').innerText = `Qty: ${order.qty}`;
+        document.getElementById('qtyDisp').innerText = order.qty;
 
+        // 2. PAYMENT LOGIC
         async function handlePayment() {
             const name = document.getElementById('custName').value;
             const phone = document.getElementById('custPhone').value;
             const address = document.getElementById('custAddress').value;
 
-            // 1. Basic Validation
             if(!name || !phone || !address) {
-                alert("Please fill in your shipping details so we can deliver your order!");
-                return;
-            }
-
-            if(phone.length < 10) {
-                alert("Please enter a valid 10-digit phone number.");
+                alert("Please fill in all shipping details first!");
                 return;
             }
 
             const payBtn = document.getElementById('payBtn');
-            payBtn.innerText = "Syncing Order...";
+            payBtn.innerText = "Syncing with Cloud...";
             payBtn.disabled = true;
 
-            // 2. Data for Google Sheet
             const orderData = {
                 orderId: order.id,
                 name: order.name,
@@ -122,10 +123,10 @@
             };
 
             try {
-                // YOUR SCRIPT URL
+                // YOUR INTEGRATED GOOGLE SCRIPT URL
                 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyV8VMfgP38mp7JOzYDpA-Mc61CmU49kveyfpYX773GJQ0ZQwdGTgAFaXbCcFlFWc_9/exec';
                 
-                // Send data to Sheet (using no-cors as it's a simple append)
+                // Sync data to Google Sheet
                 await fetch(SCRIPT_URL, {
                     method: 'POST',
                     mode: 'no-cors',
@@ -133,25 +134,23 @@
                     body: JSON.stringify(orderData)
                 });
 
-                // 3. Save to History for the user to track later
+                // Save to local history
                 let history = JSON.parse(localStorage.getItem('orderHistory') || '[]');
                 history.push({...orderData, date: new Date().toLocaleDateString()});
                 localStorage.setItem('orderHistory', JSON.stringify(history));
 
-                // 4. LAUNCH UPI INTENT
-                // PA: 8917228811@axl | PN: TheOffStore | TN: Order ID
-                const upiUrl = `upi://pay?pa=8917228811@axl&pn=TheOffStore&am=${order.total}&tn=${order.id}&cu=INR`;
-                
+                // 3. LAUNCH UPI
+                // UPI ID: 8917228811@axl
+                const upiUrl = `upi://pay?pa=theoffstore@nyes&pn=TheOffStore&am=${order.total}&tn=${order.id}&cu=INR`;
                 window.location.href = upiUrl;
 
-                // Provide a backup message if the app doesn't open
+                // 4. REDIRECT TO THANK YOU PAGE
                 setTimeout(() => {
-                    payBtn.innerText = "Pay Now via UPI";
-                    payBtn.disabled = false;
+                    window.location.href = 'success.html';
                 }, 4000);
 
             } catch (error) {
-                alert("Connection error. Please check your internet and try again.");
+                alert("Network Error. Check your internet!");
                 payBtn.innerText = "Pay Now via UPI";
                 payBtn.disabled = false;
             }
