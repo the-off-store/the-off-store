@@ -3,190 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Off Store | Odisha's Gadget Hub</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>The Off Store | Official</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
-        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .snap-x { scroll-snap-type: x mandatory; }
-        .snap-center { scroll-snap-align: center; }
-        .product-card:active { transform: scale(0.96); transition: 0.2s; }
+        :root { --bg: #f8f9fa; --card: #fff; --primary: #222; --accent: #28a745; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background: var(--bg); }
+        
+        header { background: var(--primary); color: white; padding: 2rem 1rem; text-align: center; }
+        
+        /* Search Bar Style */
+        .search-container { max-width: 600px; margin: -25px auto 30px; position: relative; z-index: 10; }
+        #search-input { 
+            width: 100%; padding: 15px 25px; border-radius: 30px; border: 1px solid #ddd;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); font-size: 1rem; outline: none;
+        }
+
+        .container { max-width: 1200px; margin: auto; padding: 20px; }
+        .category-section { margin-bottom: 50px; display: none; }
+        .category-title { font-size: 1.8rem; border-left: 5px solid var(--accent); padding-left: 15px; margin-bottom: 25px; }
+
+        /* Grid & Card */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
+        .product-card { 
+            background: var(--card); border-radius: 12px; overflow: hidden; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.2s; display: flex; flex-direction: column;
+        }
+        .product-card:hover { transform: translateY(-5px); }
+
+        /* Image Slider */
+        .image-slider { width: 100%; height: 220px; display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+        .image-slider::-webkit-scrollbar { display: none; }
+        .image-slider img { min-width: 100%; height: 100%; object-fit: cover; scroll-snap-align: start; }
+
+        .card-details { padding: 20px; flex-grow: 1; }
+        .price { font-size: 1.3rem; color: var(--accent); font-weight: bold; }
+        .btn-buy { background: var(--primary); color: white; border: none; padding: 12px; cursor: pointer; font-weight: bold; }
+
+        footer { background: var(--primary); color: #bbb; padding: 40px 20px; text-align: center; margin-top: 50px; }
+        .footer-links a { color: #fff; text-decoration: none; margin: 0 10px; font-size: 0.9rem; }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-900 pb-10">
+<body>
 
-    <nav class="bg-white border-b px-4 py-4 sticky top-0 z-50 flex justify-between items-center shadow-sm">
-        <div class="flex items-center space-x-2">
-            <div class="w-8 h-8 bg-black rounded-lg flex items-center justify-center">
-                <span class="text-white font-black text-[10px]">OFF</span>
-            </div>
-            <h1 class="text-lg font-black tracking-tighter uppercase">The Off Store</h1>
-        </div>
-        <a href="history.html" class="text-[10px] font-bold text-blue-600 uppercase px-3 py-1 bg-blue-50 rounded-full border border-blue-100 italic">My Orders</a>
-    </nav>
+<header>
+    <h1>THE OFF STORE</h1>
+</header>
 
-    <div class="p-4">
-        <div class="bg-blue-600 rounded-[2.5rem] p-6 text-white shadow-xl relative overflow-hidden">
-            <p class="text-[10px] font-black opacity-80 uppercase tracking-widest">Live in Odisha</p>
-            <h2 class="text-3xl font-black tracking-tighter leading-none mt-1 uppercase">Flash Sale <br>is Live.</h2>
-            <p class="text-xs font-bold mt-3 opacity-90">🚀 Free Express Delivery Pan-Odisha</p>
-            <div class="absolute -right-4 -bottom-4 opacity-10 text-8xl font-black italic">OFF</div>
-        </div>
+<div class="search-container">
+    <input type="text" id="search-input" placeholder="Search for products or categories..." onkeyup="filterProducts()">
+</div>
+
+<div class="container" id="main-content">
     </div>
 
-    <main class="max-w-md mx-auto p-4 grid grid-cols-2 gap-4" id="main-grid">
-        </main>
-
-    <div id="product-modal" class="fixed inset-0 bg-white z-[60] hidden overflow-y-auto no-scrollbar">
-        <div class="max-w-md mx-auto relative pb-32">
-            
-            <button onclick="closeProduct()" class="absolute top-4 left-4 bg-white/90 backdrop-blur shadow-md px-4 py-2 rounded-2xl z-20 font-bold text-sm text-gray-800 border leading-none">← Back</button>
-            
-            <div class="relative w-full h-[420px] overflow-hidden bg-gray-100 rounded-b-[3rem] shadow-lg">
-                <div id="modal-carousel" class="flex overflow-x-auto snap-x no-scrollbar h-full">
-                    </div>
-                <div id="carousel-dots" class="absolute bottom-6 left-0 right-0 flex justify-center space-x-2 z-10"></div>
-            </div>
-            
-            <div class="p-6 space-y-6">
-                <div class="space-y-2">
-                    <div class="flex justify-between items-center">
-                        <span id="modal-tag" class="bg-blue-600 text-white text-[9px] font-black px-2 py-1 rounded-md uppercase tracking-widest"></span>
-                        <span class="text-green-600 font-black text-[10px] uppercase italic">Verified Local Hub</span>
-                    </div>
-                    <h2 id="modal-title" class="text-3xl font-black tracking-tighter leading-tight text-gray-900"></h2>
-                    <div class="flex items-center space-x-3">
-                        <span id="modal-price" class="text-3xl font-black text-blue-600"></span>
-                        <span id="modal-mrp" class="text-gray-400 line-through text-lg font-medium"></span>
-                        <span class="text-green-600 font-bold text-xs uppercase bg-green-50 px-2 py-1 rounded-lg">55% OFF</span>
-                    </div>
-                </div>
-
-                <div class="bg-gray-100 p-5 rounded-3xl space-y-3 border border-gray-200">
-                    <h3 class="text-[10px] font-black text-gray-400 uppercase tracking-widest italic">Product Details</h3>
-                    <p id="modal-desc" class="text-sm font-medium text-gray-700 leading-relaxed"></p>
-                </div>
-
-                <div class="grid grid-cols-2 gap-2">
-                    <div class="bg-white p-4 rounded-3xl border shadow-sm text-center">
-                        <p class="text-[9px] text-blue-500 font-black mb-1 italic uppercase tracking-widest">Location</p>
-                        <p class="text-[11px] font-bold">Odisha Delivery</p>
-                    </div>
-                    <div class="bg-white p-4 rounded-3xl border shadow-sm text-center">
-                        <p class="text-[9px] text-green-500 font-black mb-1 italic uppercase tracking-widest">Shipping</p>
-                        <p class="text-[11px] font-bold">Free & Fast</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="fixed bottom-0 left-0 right-0 p-4 bg-white/90 backdrop-blur-md border-t z-[70]">
-                <div class="max-w-md mx-auto">
-                    <button onclick="goToCheckout()" class="w-full bg-black text-white text-center py-5 rounded-3xl font-black text-lg shadow-xl uppercase active:scale-95 transition-all">
-                        Buy Now — ₹<span id="btn-price"></span>
-                    </button>
-                </div>
-            </div>
-        </div>
+<footer>
+    <div class="footer-links">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="returns.html">Return Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="contact.html">Contact Us</a>
     </div>
+    <p>&copy; 2026 The Off Store</p>
+</footer>
 
-    <script>
-        // --- 1. PRODUCT DATABASE WITH YOUR NEW IMAGES ---
-        const products = [
-            {
-                id: 1,
-                name: "10-in-1 Emergency Puncture Kit",
-                price: 599,
-                mrp: 1299,
-                tag: "Bestseller",
-                images: [
-                    "https://i.ibb.co/TM408xTQ/Resized-Image-2026-03-28-23-32-47-9245.jpg", // Image 1
-                    "https://i.ibb.co/VWSCnDP7/Resized-Image-2026-03-28-23-35-30-4744.jpg", // Image 2
-                    "https://i.ibb.co/kY1Q2wC/Resized-Image-2026-03-28-23-36-39-6595.jpg"  // Image 3
-                ],
-                desc: "Never get stranded on Odisha highways again. This heavy-duty kit fixes tubeless tyres in minutes. Includes T-handle tools, 5 high-grip rubber strips, and cutter. Perfect for Bikes, Scooty, and Cars."
-            },
-            {
-                id: 2,
-                name: "Add Product 2 Here",
-                price: 799,
-                mrp: 1499,
-                tag: "New",
-                images: ["https://via.placeholder.com/600x600?text=Product+2"],
-                desc: "Describe your second product here."
-            }
-        ];
+<script src="products.js"></script>
 
-        // --- 2. RENDER THE HOME GRID ---
-        const grid = document.getElementById('main-grid');
-        products.forEach(p => {
-            grid.innerHTML += `
-                <div onclick="openProduct(${p.id})" class="product-card bg-white rounded-[2.5rem] border shadow-sm overflow-hidden">
-                    <img src="${p.images[0]}" class="w-full h-36 object-cover">
-                    <div class="p-4 space-y-1">
-                        <p class="text-[8px] font-black text-blue-600 uppercase tracking-widest">${p.tag}</p>
-                        <h3 class="font-bold text-xs text-gray-800 truncate">${p.name}</h3>
-                        <div class="flex items-center space-x-2">
-                            <span class="font-black text-sm text-blue-600">₹${p.price}</span>
-                            <span class="text-[9px] text-gray-400 line-through">₹${p.mrp}</span>
+<script>
+function renderStore(filterText = "") {
+    const mainContent = document.getElementById('main-content');
+    mainContent.innerHTML = ""; // Clear current view
+    
+    storeData.categories.forEach(cat => {
+        // Filter: Active items + Search Match
+        const items = storeData.products.filter(p => 
+            p.category === cat && 
+            p.active && 
+            p.name.toLowerCase().includes(filterText.toLowerCase())
+        );
+
+        if (items.length > 0) {
+            const section = document.createElement('section');
+            section.className = 'category-section';
+            section.style.display = 'block';
+            section.innerHTML = `<h2 class="category-title">${cat}</h2><div class="grid" id="grid-${cat.replace(/\s+/g, '')}"></div>`;
+            mainContent.appendChild(section);
+
+            const grid = document.getElementById(`grid-${cat.replace(/\s+/g, '')}`);
+            items.forEach(product => {
+                if (product.id === "AUTO") product.id = "PROD-" + Math.random().toString(36).substr(2, 6).toUpperCase();
+
+                const validImages = product.images.filter(img => img !== "");
+                const imageHtml = validImages.length > 0 
+                    ? validImages.map(src => `<img src="${src}">`).join('')
+                    : `<img src="https://via.placeholder.com/300x200?text=No+Image">`;
+
+                grid.innerHTML += `
+                    <div class="product-card">
+                        <div class="image-slider">${imageHtml}</div>
+                        <div class="card-details">
+                            <small>${product.id}</small>
+                            <h3>${product.name}</h3>
+                            <p class="price">₹${product.price}</p>
                         </div>
-                    </div>
-                </div>
-            `;
-        });
-
-        // --- 3. MODAL GALLERY LOGIC ---
-        function openProduct(id) {
-            const p = products.find(i => i.id === id);
-            
-            // Setup Swipe Carousel
-            const carousel = document.getElementById('modal-carousel');
-            const dots = document.getElementById('carousel-dots');
-            carousel.innerHTML = '';
-            dots.innerHTML = '';
-            
-            p.images.forEach((imgUrl, index) => {
-                // Add Image
-                carousel.innerHTML += `<img src="${imgUrl}" class="w-full h-full flex-shrink-0 object-cover snap-center">`;
-                // Add Dot
-                dots.innerHTML += `<div class="w-1.5 h-1.5 rounded-full transition-all duration-300 ${index === 0 ? 'bg-blue-600 w-4' : 'bg-gray-300'}"></div>`;
+                        <button class="btn-buy" onclick="alert('Order ID: ORD-${Date.now()}')">BUY NOW</button>
+                    </div>`;
             });
-
-            // Update Text Details
-            document.getElementById('modal-title').innerText = p.name;
-            document.getElementById('modal-price').innerText = "₹" + p.price;
-            document.getElementById('modal-mrp').innerText = "₹" + p.mrp;
-            document.getElementById('modal-desc').innerText = p.desc;
-            document.getElementById('modal-tag').innerText = p.tag;
-            document.getElementById('btn-price').innerText = p.price;
-
-            // Handle Dot Highlighting on Swipe
-            carousel.onscroll = () => {
-                const scrollIndex = Math.round(carousel.scrollLeft / carousel.offsetWidth);
-                Array.from(dots.children).forEach((dot, i) => {
-                    if (i === scrollIndex) {
-                        dot.className = "w-4 h-1.5 rounded-full bg-blue-600 transition-all duration-300";
-                    } else {
-                        dot.className = "w-1.5 h-1.5 rounded-full bg-gray-300 transition-all duration-300";
-                    }
-                });
-            };
-
-            // Save for Checkout
-            localStorage.setItem('selectedProduct', JSON.stringify(p));
-            
-            document.getElementById('product-modal').classList.remove('hidden');
-            document.body.style.overflow = 'hidden';
         }
+    });
+}
 
-        function closeProduct() {
-            document.getElementById('product-modal').classList.add('hidden');
-            document.body.style.overflow = 'auto';
-        }
+function filterProducts() {
+    const text = document.getElementById('search-input').value;
+    renderStore(text);
+}
 
-        function goToCheckout() {
-            window.location.href = "checkout.html";
-        }
-    </script>
-</body>
-</html>
+// Initial Load
+window.onload = () => renderStore();
+</script>
