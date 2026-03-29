@@ -7,17 +7,17 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; background-color: #f9fafb; scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background-color: #f9fafb; scroll-behavior: smooth; -webkit-tap-highlight-color: transparent; }
         .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        .category-label { scroll-margin-top: 120px; }
-        /* Amazon-style thumbnail hover */
-        .thumb-active { border-color: #2563eb !important; scale: 1.1; }
+        .hidden-product { display: none !important; }
+        .category-section { scroll-margin-top: 140px; min-height: 100px; }
+        .product-card { transition: transform 0.1s; border: 1px solid #f1f5f9; }
+        .product-card:active { transform: scale(0.96); }
     </style>
 </head>
-<body class="pb-10">
+<body class="pb-20">
 
-    <nav class="bg-white border-b sticky top-0 z-50 p-4 space-y-3 shadow-sm">
+    <nav class="bg-white/80 backdrop-blur-md border-b sticky top-0 z-50 p-4 space-y-3 shadow-sm">
         <div class="flex justify-between items-center">
             <div class="flex items-center gap-2" onclick="window.scrollTo(0,0)">
                 <div class="bg-black text-white px-2 py-1 rounded font-black text-sm">OFF</div>
@@ -27,137 +27,123 @@
         </div>
         
         <div class="relative">
-            <input type="text" id="searchInput" onkeyup="searchStore()" placeholder="Search 140+ tools & gear..." 
-            class="w-full bg-gray-100 border-none rounded-2xl py-3 px-5 text-sm font-bold focus:ring-2 focus:ring-blue-600 outline-none">
+            <input type="text" id="searchInput" onkeyup="searchItems()" placeholder="Search gear, tools, or kits..." 
+            class="w-full bg-gray-100 border-none rounded-2xl py-3.5 px-5 text-sm font-bold focus:ring-2 focus:ring-blue-600 outline-none">
         </div>
     </nav>
 
-    <div class="px-4 py-3 flex gap-2 overflow-x-auto no-scrollbar sticky top-[115px] bg-white/80 backdrop-blur-md z-40 border-b">
-        <button onclick="filterCat('ALL')" class="whitespace-nowrap bg-black text-white px-5 py-2 rounded-full text-[10px] font-black uppercase">All</button>
-        <button onclick="filterCat('KIT')" class="whitespace-nowrap bg-white border px-5 py-2 rounded-full text-[10px] font-black uppercase text-gray-500">Kits</button>
-        <button onclick="filterCat('LIT')" class="whitespace-nowrap bg-white border px-5 py-2 rounded-full text-[10px] font-black uppercase text-gray-500">Lighting</button>
-        <button onclick="filterCat('BIK')" class="whitespace-nowrap bg-white border px-5 py-2 rounded-full text-[10px] font-black uppercase text-gray-500">Bike</button>
-        <button onclick="filterCat('CAR')" class="whitespace-nowrap bg-white border px-5 py-2 rounded-full text-[10px] font-black uppercase text-gray-500">Car</button>
+    <div class="px-4 py-3 flex gap-2 overflow-x-auto no-scrollbar sticky top-[125px] z-40 bg-white/50 backdrop-blur-sm">
+        <a href="#cat-emergency" class="whitespace-nowrap bg-black text-white px-5 py-2.5 rounded-full text-[10px] font-black uppercase">Emergency</a>
+        <a href="#cat-lighting" class="whitespace-nowrap bg-white border px-5 py-2.5 rounded-full text-[10px] font-black uppercase text-gray-400">Lighting</a>
+        <a href="#cat-bike" class="whitespace-nowrap bg-white border px-5 py-2.5 rounded-full text-[10px] font-black uppercase text-gray-400">Bike Gear</a>
+        <a href="#cat-car" class="whitespace-nowrap bg-white border px-5 py-2.5 rounded-full text-[10px] font-black uppercase text-gray-400">Car Care</a>
     </div>
 
-    <main class="p-4 grid grid-cols-2 gap-4 min-h-screen" id="productGrid">
-        </main>
+    <main class="p-4 space-y-16">
 
-    <footer class="bg-black text-white mt-20 pt-16 pb-10 px-8 rounded-t-[3rem]">
-        <div class="space-y-10">
-            <div class="space-y-4">
-                <div class="flex items-center gap-2">
-                    <div class="bg-white text-black px-3 py-1 rounded font-black text-lg">OFF</div>
-                    <h2 class="text-3xl font-black tracking-tighter uppercase">The Off Store</h2>
-                </div>
-                <p class="text-gray-400 font-bold text-sm leading-relaxed max-w-xs">
-                    Premium Emergency Gear & Tactical Tools. Shipping across 19,000+ Pincodes Pan-India. 🇮🇳
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 gap-8 pt-6">
-                <div class="flex flex-col gap-4">
-                    <h4 class="text-xs font-black text-blue-500 uppercase tracking-[0.3em]">Customer Support</h4>
-                    <a href="https://wa.me/918917228811" class="text-2xl font-black hover:text-green-500 transition-colors">WhatsApp Us</a>
-                    <a href="history.html" class="text-2xl font-black hover:text-blue-500 transition-colors">Track Order</a>
-                </div>
-
-                <div class="flex flex-col gap-4 border-t border-gray-800 pt-8">
-                    <h4 class="text-xs font-black text-blue-500 uppercase tracking-[0.3em]">Legal & Safety</h4>
-                    <div class="grid grid-cols-2 gap-4">
-                        <a href="shipping.html" class="text-sm font-black uppercase hover:underline">Shipping</a>
-                        <a href="terms.html" class="text-sm font-black uppercase hover:underline">Terms</a>
-                        <a href="privacy.html" class="text-sm font-black uppercase hover:underline">Privacy</a>
-                        <a href="refund.html" class="text-sm font-black uppercase hover:underline">Refunds</a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pt-12 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center gap-6">
-                <p class="text-[10px] font-black text-gray-600 uppercase tracking-widest text-center">
-                    Administered in Odisha, India • Secure UPI Gateway
-                </p>
-                <div class="flex gap-4 opacity-30">
-                    <img src="https://img.icons8.com/color/48/upi.png" class="h-6">
-                    <img src="https://img.icons8.com/color/48/visa.png" class="h-6">
-                    <img src="https://img.icons8.com/color/48/mastercard.png" class="h-6">
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <script src="products.js"></script>
-    <script>
-        const grid = document.getElementById('productGrid');
-
-        function loadProducts(filter = 'ALL') {
-            grid.innerHTML = '';
-            inventory.forEach((item, index) => {
-                if(filter !== 'ALL' && item.category !== filter) return;
-
-                const productId = `OFF-${item.category}-${100 + index}`;
-                const card = document.createElement('div');
-                card.className = "product-card bg-white p-3 rounded-[2.5rem] border shadow-sm space-y-3";
-                card.setAttribute('data-keywords', item.searchKeywords.toLowerCase());
-
-                card.innerHTML = `
-                    <div class="space-y-2">
-                        <div class="aspect-square bg-gray-50 rounded-[2rem] overflow-hidden">
-                            <img id="img-main-${index}" src="${item.images[0]}" class="w-full h-full object-cover">
-                        </div>
-                        <div class="flex gap-1 justify-center px-1">
-                            ${item.images.map((img, i) => `
-                                <img src="${img}" onclick="swapImg(${index}, '${img}')" 
-                                class="w-7 h-7 rounded-lg border-2 border-transparent object-cover cursor-pointer hover:border-blue-400">
-                            `).join('')}
-                        </div>
+        <section id="cat-emergency" class="category-section">
+            <h2 class="text-3xl font-black mb-6 px-2 tracking-tighter uppercase">Emergency Kits</h2>
+            <div class="grid grid-cols-2 gap-4" id="emergency-grid">
+                
+                <div class="product-card bg-white p-3 rounded-[2.5rem] shadow-sm space-y-3" data-name="10-in-1 emergency puncture kit">
+                    <div class="aspect-square bg-gray-50 rounded-[2rem] overflow-hidden relative">
+                        <img src="https://images.unsplash.com/photo-1486006920555-c77dcf18193c?auto=format&fit=crop&q=80" class="w-full h-full object-cover">
+                        <div class="absolute top-3 left-3 bg-white/90 backdrop-blur px-2 py-1 rounded-full text-[8px] font-black italic">🇮🇳 PAN-INDIA</div>
                     </div>
                     <div class="px-1">
-                        <p class="text-[7px] font-black text-gray-300 uppercase tracking-widest">${productId}</p>
-                        <h3 class="font-bold text-[11px] text-gray-800 h-8 line-clamp-2 leading-tight uppercase">${item.name}</h3>
+                        <h3 class="font-bold text-xs text-gray-800 h-8 line-clamp-2 leading-tight">10-in-1 Emergency Puncture Kit</h3>
                         <div class="flex items-center justify-between mt-3">
-                            <span class="font-black text-blue-600 text-sm">₹${item.price}</span>
-                            <button onclick="buyNow('${item.category}', '${item.name}', ${item.price})" 
-                            class="bg-black text-white text-[9px] font-black px-4 py-2 rounded-full uppercase active:scale-95 transition-transform">Buy</button>
+                            <div class="flex flex-col">
+                                <span class="font-black text-blue-600 text-sm">₹599</span>
+                                <span class="text-[9px] text-gray-400 line-through font-bold">₹1299</span>
+                            </div>
+                            <div class="flex items-center bg-gray-100 rounded-full px-2 py-1 gap-2">
+                                <button onclick="changeQty('qty-1', -1)" class="text-xs font-black px-1">-</button>
+                                <span id="qty-1" class="text-[10px] font-black">1</span>
+                                <button onclick="changeQty('qty-1', 1)" class="text-xs font-black px-1">+</button>
+                            </div>
                         </div>
+                        <button onclick="initBuy('KIT', '10-in-1 Puncture Kit', 599, 'qty-1')" class="w-full mt-3 bg-black text-white text-[10px] font-black py-3 rounded-full uppercase tracking-widest shadow-lg active:bg-blue-600">Buy Now</button>
                     </div>
-                `;
-                grid.appendChild(card);
-            });
+                </div>
+
+                </div>
+        </section>
+
+        <section id="cat-lighting" class="category-section">
+            <h2 class="text-3xl font-black mb-6 px-2 tracking-tighter uppercase">Lighting</h2>
+            <div class="grid grid-cols-2 gap-4" id="lighting-grid">
+                <p class="text-[10px] font-black text-gray-300 uppercase p-2 col-span-2 italic">More items coming soon...</p>
+            </div>
+        </section>
+
+        <section id="cat-bike" class="category-section">
+            <h2 class="text-3xl font-black mb-6 px-2 tracking-tighter uppercase">Bike Gear</h2>
+            <div class="grid grid-cols-2 gap-4" id="bike-grid"></div>
+        </section>
+
+        <section id="cat-car" class="category-section">
+            <h2 class="text-3xl font-black mb-6 px-2 tracking-tighter uppercase">Car Care</h2>
+            <div class="grid grid-cols-2 gap-4" id="car-grid"></div>
+        </section>
+
+    </main>
+
+    <footer class="bg-white border-t p-10 space-y-8">
+        <div class="grid grid-cols-2 gap-8 text-[10px] font-black uppercase text-gray-400">
+            <a href="privacy.html">Privacy Policy</a>
+            <a href="shipping.html">Shipping & Returns</a>
+            <a href="terms.html">Terms of Service</a>
+            <a href="https://wa.me/918917228811" class="text-green-600">WhatsApp Support</a>
+        </div>
+        <p class="text-[9px] font-black text-gray-300">ADMINISTERED BY THE OFF STORE TEAM • ODISHA</p>
+    </footer>
+
+    <script>
+        // 1. QUANTITY SELECTOR
+        function changeQty(id, delta) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            let val = parseInt(el.innerText) + delta;
+            if (val > 0) el.innerText = val;
         }
 
-        function swapImg(idx, src) {
-            document.getElementById(`img-main-${idx}`).src = src;
-        }
-
-        function filterCat(cat) {
-            loadProducts(cat);
-            // Visual feedback for buttons
-            event.target.parentElement.querySelectorAll('button').forEach(btn => {
-                btn.classList.remove('bg-black', 'text-white');
-                btn.classList.add('bg-white', 'text-gray-500');
-            });
-            event.target.classList.add('bg-black', 'text-white');
-        }
-
-        function searchStore() {
-            const term = document.getElementById('searchInput').value.toLowerCase();
-            const cards = document.querySelectorAll('.product-card');
+        // 2. SEARCH ENGINE
+        function searchItems() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let cards = document.querySelectorAll('.product-card');
             cards.forEach(card => {
-                const keywords = card.getAttribute('data-keywords');
-                card.style.display = keywords.includes(term) ? 'block' : 'none';
+                let name = card.getAttribute('data-name');
+                if (name.includes(input)) {
+                    card.style.display = "block";
+                } else {
+                    card.style.display = "none";
+                }
             });
         }
 
-        function buyNow(prefix, name, price) {
-            const orderId = `OFF-${prefix}-${Math.floor(1000 + Math.random() * 9000)}`;
-            const data = { id: orderId, orderId: orderId, name: name, price: price, qty: 1, total: price };
-            localStorage.setItem('pendingOrder', JSON.stringify(data));
+        // 3. BUY NOW LOGIC
+        function initBuy(prefix, name, price, qtyId) {
+            const qtyElement = document.getElementById(qtyId);
+            const qty = qtyElement ? parseInt(qtyElement.innerText) : 1;
+            
+            // Unique ID Generator
+            const now = new Date();
+            const datePart = `${now.getDate()}${now.getMonth() + 1}`;
+            const randomPart = Math.random().toString(36).substring(2, 5).toUpperCase();
+            const uniqueID = `OFF-${prefix}-${datePart}-${randomPart}`;
+
+            const orderData = { 
+                id: uniqueID, 
+                name: name, 
+                price: price, 
+                qty: qty, 
+                total: price * qty 
+            };
+            
+            localStorage.setItem('pendingOrder', JSON.stringify(orderData));
             window.location.href = 'checkout.html';
         }
-
-        // Initial Load
-        loadProducts();
     </script>
 </body>
 </html>
