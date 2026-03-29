@@ -109,7 +109,7 @@
             }
 
             const payBtn = document.getElementById('payBtn');
-            payBtn.innerText = "Syncing with Cloud...";
+            payBtn.innerText = "Placing Your Order...";
             payBtn.disabled = true;
 
             const orderData = {
@@ -147,7 +147,7 @@
                 // 4. REDIRECT TO THANK YOU PAGE
                 setTimeout(() => {
                     window.location.href = 'success.html';
-                }, 40000);
+                }, 4000);
 
             } catch (error) {
                 alert("Network Error. Check your internet!");
