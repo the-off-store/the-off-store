@@ -133,7 +133,7 @@
                 localStorage.setItem('orderHistory', JSON.stringify(history));
 
                 // LAUNCH UPI: 8917228811@axl
-                const upiUrl = `upi://pay?pa=8917228811@axl&pn=TheOffStore&am=${order.total}&tn=${order.id}&cu=INR`;
+                const upiUrl = `upi://pay?pa=xdx@freecharge&pn=TheOffStore&am=${order.total}&tn=${order.id}&cu=INR`;
                 window.location.href = upiUrl;
 
                 // Move to Success after payment launch
